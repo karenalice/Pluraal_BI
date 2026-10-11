@@ -55,7 +55,28 @@ select:focus-visible, textarea:focus-visible {
 }
 .auth-card-icon { width: 220px; height: 78px; overflow: hidden; margin-bottom: 1rem; }
 .auth-card-icon img { width: 220px; height: 78px; max-width: none; object-fit: cover; }
+.auth-brand-eyebrow {
+  display: inline-block;
+  margin-bottom: 1.15rem;
+  color: #b9e3ae;
+  font-size: .75rem;
+  font-weight: 800;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+.auth-brand-title { max-width: 600px; font-size: clamp(2.25rem, 3.1vw, 3.2rem); line-height: 1.12; }
 .auth-brand-title span.highlight-green { color: #a3d991; }
+.auth-brand-subtitle { max-width: 560px; margin-bottom: 1.75rem; }
+.auth-feature-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem; max-width: 560px; }
+.auth-feature-item {
+  min-height: 74px;
+  padding: .85rem .9rem;
+  align-items: flex-start;
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .07);
+  line-height: 1.4;
+}
 .auth-feature-icon { color: #a3d991; }
 .auth-card, .password-change-card {
   border: 1px solid var(--bi-line);
