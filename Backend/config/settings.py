@@ -18,18 +18,18 @@ class Settings:
     SUPABASE_PG_PORT = int(os.getenv("SUPABASE_PG_PORT", "6543"))
     SUPABASE_PG_DATABASE = os.getenv("SUPABASE_PG_DATABASE", "postgres")
     SUPABASE_PG_USER = os.getenv("SUPABASE_PG_USER", "postgres.nplfvbrquxcfpvrlgurw")
-    SUPABASE_PG_PASSWORD = os.getenv("SUPABASE_PG_PASSWORD", "0Utl@nd&r2001")
+    SUPABASE_PG_PASSWORD = os.getenv("SUPABASE_PG_PASSWORD", "")
     SUPABASE_PG_SCHEMA = os.getenv("SUPABASE_PG_SCHEMA", "bi_pluraal")
 
     # MySQL Settings
     MYSQL_HOST = os.getenv("MYSQL_HOST", "127.0.0.1")
     MYSQL_PORT = int(os.getenv("MYSQL_PORT", "3306"))
     MYSQL_USER = os.getenv("MYSQL_USER", "root")
-    MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD", "Mudar@123")
+    MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD", "")
     MYSQL_DATABASE = os.getenv("MYSQL_DATABASE", "bi_pluraal")
 
     # JWT Settings
-    JWT_SECRET = os.getenv("JWT_SECRET", "pluraal-bi-super-secret-key-2026-auth-token")
+    JWT_SECRET = os.getenv("JWT_SECRET", "")
     JWT_ALGORITHM = "HS256"
     JWT_EXPIRATION_HOURS = 24
 

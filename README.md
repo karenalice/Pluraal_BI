@@ -108,3 +108,14 @@ No arquivo `.env`:
   DB_ENGINE=mysql
   ```
 Ambos os bancos já contêm as tabelas, usuários e os 17 dashboards iniciais configurados.
+
+## Publicar no Vercel
+
+O arquivo `app.py` na raiz expõe a aplicação Flask ao Vercel. O mesmo domínio atende a interface e as rotas `/api`, então não é necessário configurar uma URL de API no frontend.
+
+1. Acesse [vercel.com/new](https://vercel.com/new), conecte sua conta GitHub e importe o repositório `karenalice/Pluraal_BI`.
+2. Mantenha **Root Directory** na raiz do repositório e use a detecção automática de Flask. Não é necessário informar comando de build nem diretório de saída.
+3. Em **Environment Variables**, cadastre as variáveis do banco usado em produção: `DB_ENGINE=supabase`, `SUPABASE_PG_HOST`, `SUPABASE_PG_PORT`, `SUPABASE_PG_DATABASE`, `SUPABASE_PG_USER`, `SUPABASE_PG_PASSWORD` e `SUPABASE_PG_SCHEMA`. Cadastre também `JWT_SECRET` com um valor novo, longo e aleatório. A variável `SUPABASE_URL` só é necessária se alguma integração específica a utilizar.
+4. Clique em **Deploy**. Após a publicação, abra a URL gerada e verifique `/api/health` no mesmo domínio. Se alterar alguma variável depois, faça um novo deploy.
+
+Use as credenciais atuais do banco apenas após trocá-las no Supabase e atualizar o `.env` local. Senhas e a chave JWT já estiveram no código versionado; removê-las do arquivo atual não as apaga do histórico do Git. Nunca cadastre o conteúdo do `.env` no repositório.
