@@ -175,6 +175,9 @@
   <!-- ================= APP CONTAINER (LOGADO) ================= -->
   <div id="appContainer" class="hidden">
     
+    <!-- Top Pluraal Brand Color Stripe -->
+    <div class="pluraal-top-stripe"></div>
+
     <!-- Top Navigation Bar -->
     <header class="bi-navbar">
       <div class="bi-brand" id="navBrandLogo">
@@ -191,7 +194,7 @@
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
           <span>Gerenciar Usuários</span>
         </button>
-        <button id="btnNewLink" class="bi-nav-btn hidden" style="border-color: rgba(6, 182, 212, 0.4); color: #22d3ee;">
+        <button id="btnNewLink" class="bi-nav-btn bi-btn-add-link hidden">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
           <span>Novo Link BI</span>
         </button>
@@ -212,15 +215,14 @@
       </div>
     </header>
 
-
     <!-- VIEW 1: HOME HUB COM CARDS DE DASHBOARDS (QUANDO HOUVER MAIS DE 1) -->
     <main id="hubView" class="bi-main-container">
       <div class="bi-hero">
         <h1 class="bi-hero-title">
-          <span>Relatórios e Dashboards</span>
+          <span>Portal de Inteligência</span> <span class="highlight-brand">Power BI</span>
         </h1>
         <p class="bi-hero-subtitle">
-          Selecione um dos relatórios do Power BI abaixo para visualizar dados pedagógicos consolidados.
+          Acesse e acompanhe relatórios pedagógicos, gráficos de desempenho e indicadores analíticos das unidades.
         </p>
       </div>
 
@@ -228,9 +230,11 @@
       <div class="bi-controls-bar">
         <div class="bi-search-wrapper">
           <svg class="bi-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-          <input type="text" id="campoPesquisa" class="bi-search-input" placeholder="Pesquisar relatório ou unidade...">
+          <input type="text" id="campoPesquisa" class="bi-search-input" placeholder="Pesquisar relatório, unidade ou polo...">
         </div>
-        <div class="bi-stats-text" id="quantidadeDashboards">Carregando...</div>
+        <div class="bi-stats-text" id="quantidadeDashboards">
+          <span class="bi-stats-dot"></span> Carregando relatórios...
+        </div>
       </div>
 
       <!-- Cards Grid -->
@@ -391,7 +395,7 @@
 
         <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 2rem;">
           <button type="button" class="btn btn-secondary" onclick="fecharModalUsuario()">Cancelar</button>
-          <button type="submit" class="btn btn-primary" style="padding: 10px 24px;">Salvar Usuário</button>
+          <button type="submit" class="btn" style="background: linear-gradient(135deg, var(--pluraal-green) 0%, var(--pluraal-green-dark) 100%); color: #121324; font-family: var(--font-display); font-weight: 700; border: none; padding: 11px 26px; border-radius: 12px; cursor: pointer; box-shadow: 0 4px 12px var(--pluraal-green-glow);">Salvar Usuário</button>
         </div>
       </form>
     </div>
@@ -426,7 +430,7 @@
 
         <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 2rem;">
           <button type="button" class="btn btn-secondary" onclick="fecharModalLink()">Cancelar</button>
-          <button type="submit" class="btn btn-primary" style="padding: 10px 24px;">Salvar Link</button>
+          <button type="submit" class="btn" style="background: linear-gradient(135deg, var(--pluraal-green) 0%, var(--pluraal-green-dark) 100%); color: #121324; font-family: var(--font-display); font-weight: 700; border: none; padding: 11px 26px; border-radius: 12px; cursor: pointer; box-shadow: 0 4px 12px var(--pluraal-green-glow);">Salvar Link</button>
         </div>
       </form>
     </div>

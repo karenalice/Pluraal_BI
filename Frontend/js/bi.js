@@ -111,11 +111,18 @@ function criarCard(dashboard) {
   const nomeSeguro = escaparHTML(dashboard.nome);
   const linkSeguro = escaparHTML(dashboard.link);
   const linkCurto = escaparHTML(encurtarLink(dashboard.link));
+  const monograma = (dashboard.nome || "BI").substring(0, 2).toUpperCase();
 
   card.innerHTML = `
     <div class="card-header">
-      <div class="card-title-area">
-        <h3>${nomeSeguro}</h3>
+      <div class="card-title-group">
+        <div class="card-unit-badge">${monograma}</div>
+        <div class="card-title-area">
+          <h3>${nomeSeguro}</h3>
+          <div style="font-size: 0.72rem; color: #82c673; display: flex; align-items: center; gap: 5px; margin-top: 2px;">
+            <span class="bi-stats-dot"></span> Relatório Ativo
+          </div>
+        </div>
       </div>
       <a href="${linkSeguro}" target="_blank" rel="noopener noreferrer" class="icon-box" title="Abrir em nova aba">
         <svg viewBox="0 0 24 24" fill="none">
@@ -127,15 +134,15 @@ function criarCard(dashboard) {
     </div>
 
     <p class="card-description">
-      ${dashboard.descricao ? escaparHTML(dashboard.descricao) : "Acesse os relatórios e métricas consolidadas do Power BI"}
+      ${dashboard.descricao ? escaparHTML(dashboard.descricao) : "Acesse os indicadores e gráficos consolidados do Power BI."}
     </p>
 
     <div class="card-actions-area">
       <button type="button" class="btn-open-embed" title="Visualizar na plataforma">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <polygon points="5 3 19 12 5 21 5 3"></polygon>
         </svg>
-        <span>Abrir Dashboard</span>
+        <span>Visualizar Dashboard</span>
       </button>
     </div>
 
@@ -143,7 +150,7 @@ function criarCard(dashboard) {
       <a href="${linkSeguro}" target="_blank" rel="noopener noreferrer" class="dashboard-link-text" title="${linkSeguro}">
         ${linkCurto}
       </a>
-      <button type="button" class="btn-copiar-link" title="Copiar link">
+      <button type="button" class="btn-copiar-link" title="Copiar link do Power BI">
         <svg viewBox="0 0 24 24" fill="none">
           <rect x="9" y="9" width="10" height="10" rx="2" stroke="currentColor" stroke-width="2"/>
           <path d="M15 9V6C15 4.9 14.1 4 13 4H6C4.9 4 4 4.9 4 6V13C4 14.1 4.9 15 6 15H9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>

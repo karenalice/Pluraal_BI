@@ -50,8 +50,9 @@ window.initAppAfterLogin = async function(user) {
 
   // Management controls based on user role
   const isMaster = user.hierarquia === "Master";
+  const isAdministrador = user.hierarquia === "Administrador";
   const canManageUsers = isMaster || user.pode_criar_usuario;
-  const canCreateLinks = isMaster || user.pode_criar_link;
+  const canCreateLinks = isMaster || isAdministrador;
 
   const btnUsersNav = document.getElementById("btnUsersNav");
   const btnNewLink = document.getElementById("btnNewLink");

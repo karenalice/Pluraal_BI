@@ -9,8 +9,8 @@ def get_capabilities():
     user = g.current_user
     h = user["hierarquia"]
     is_master = (h == "Master")
-    can_create_user = bool(user.get("pode_criar_usuario"))
-    can_create_link = bool(user.get("pode_criar_link"))
+    can_create_user = is_master or bool(user.get("pode_criar_usuario"))
+    can_create_link = h in ("Master", "Administrador")
 
     if is_master:
         allowed_roles = ["Master", "Administrador", "uniao", "associacao", "escola"]
@@ -25,6 +25,6 @@ def get_capabilities():
         "pode_criar_usuario": can_create_user,
         "pode_criar_link": can_create_link,
         "can_grant_pode_criar_usuario": is_master,
-        "can_grant_pode_criar_link": is_master,
+        "can_grant_pode_criar_link": False, # Automaticamente disponivel para Master e Administrador
         "allowed_target_hierarchies": allowed_roles
     }), 200

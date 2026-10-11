@@ -48,9 +48,9 @@ def create_link(creator_id: int, data: dict):
         if not user:
             raise ValueError("Usuário não encontrado.")
 
-        is_master = (user["hierarquia"] == "Master")
-        if not is_master and not user.get("pode_criar_link"):
-            raise PermissionError("Você não tem autorização para cadastrar links do Power BI.")
+        # Regra: Apenas Master e Administrador podem adicionar links do Power BI
+        if user["hierarquia"] not in ("Master", "Administrador"):
+            raise PermissionError("Apenas os perfis Master e Administrador têm permissão para adicionar links do Power BI.")
 
         nome = data.get("nome", "").strip()
         link = data.get("link", "").strip()
@@ -77,9 +77,8 @@ def update_link(updater_id: int, link_id: int, data: dict):
         if not user:
             raise ValueError("Usuário não encontrado.")
 
-        is_master = (user["hierarquia"] == "Master")
-        if not is_master and not user.get("pode_criar_link"):
-            raise PermissionError("Você não tem permissão para editar links do Power BI.")
+        if user["hierarquia"] not in ("Master", "Administrador"):
+            raise PermissionError("Apenas os perfis Master e Administrador têm permissão para editar links do Power BI.")
 
         nome = data.get("nome", "").strip()
         link = data.get("link", "").strip()
@@ -108,9 +107,8 @@ def delete_link(requester_id: int, link_id: int):
         if not user:
             raise ValueError("Usuário não encontrado.")
 
-        is_master = (user["hierarquia"] == "Master")
-        if not is_master and not user.get("pode_criar_link"):
-            raise PermissionError("Você não tem permissão para excluir links do Power BI.")
+        if user["hierarquia"] not in ("Master", "Administrador"):
+            raise PermissionError("Apenas os perfis Master e Administrador têm permissão para excluir links do Power BI.")
 
         cur.execute("DELETE FROM usuario_powerbi WHERE id_link = %s", (link_id,))
         cur.execute("DELETE FROM powerbi_link WHERE id_link = %s", (link_id,))
