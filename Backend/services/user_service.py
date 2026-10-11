@@ -1,4 +1,5 @@
 from datetime import date
+from Backend.config.settings import settings
 from Backend.database.connection import get_db_cursor
 from Backend.services.security_service import (
     hash_password,
@@ -47,9 +48,13 @@ def get_user_by_id(user_id: int):
         user["links_bi"] = cur.fetchall()
 
         # Load organizational accesses if any
-        cur.execute("""
+        col_escola = "ep.ESCOLA" if settings.DB_ENGINE == "mysql" else 'ep."ESCOLA"'
+        col_uniao = "ep.UNIAO" if settings.DB_ENGINE == "mysql" else 'ep."UNIAO"'
+        col_assoc = "ep.ASSOCIACAO" if settings.DB_ENGINE == "mysql" else 'ep."ASSOCIACAO"'
+
+        cur.execute(f"""
             SELECT ua.id_acesso, ua.tipo, ua.sigla_uniao, ua.sigla_associacao, ua.id_escolas,
-                   ep.ESCOLA as nome_escola, ep.UNIAO as nome_uniao, ep.ASSOCIACAO as nome_associacao
+                   {col_escola} as nome_escola, {col_uniao} as nome_uniao, {col_assoc} as nome_associacao
             FROM usuario_acesso ua
             LEFT JOIN escolas_pluraal ep ON ua.id_escolas = ep.id_escolas
             WHERE ua.id_usuario = %s
