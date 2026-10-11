@@ -67,6 +67,7 @@ function mostrarCopiado(botao) {
 
 function abrirDashboard(dashboard) {
   activeViewingDashboard = dashboard;
+  const appContainer = document.getElementById("appContainer");
   const hubView = document.getElementById("hubView");
   const biView = document.getElementById("biView");
   const usersView = document.getElementById("usersView");
@@ -76,6 +77,7 @@ function abrirDashboard(dashboard) {
 
   hubView.classList.add("hidden");
   usersView.classList.add("hidden");
+  appContainer.classList.add("hidden");
   biView.classList.remove("hidden");
 
   titleEl.textContent = dashboard.nome;
@@ -94,12 +96,14 @@ function abrirDashboard(dashboard) {
 }
 
 function fecharDashboard() {
+  const appContainer = document.getElementById("appContainer");
   const hubView = document.getElementById("hubView");
   const biView = document.getElementById("biView");
   const iframe = document.getElementById("biIframe");
 
   iframe.src = "about:blank";
   biView.classList.add("hidden");
+  appContainer.classList.remove("hidden");
   hubView.classList.remove("hidden");
   activeViewingDashboard = null;
 }
