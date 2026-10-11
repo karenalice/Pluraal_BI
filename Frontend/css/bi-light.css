@@ -164,6 +164,53 @@ select:focus-visible, textarea:focus-visible {
 .bi-badge-role { background: var(--bi-primary-soft); color: var(--bi-primary-dark); border-color: #d2d4ec; }
 #nenhumResultado h3 { color: var(--bi-ink) !important; }
 
+/* User and link management: compact rows with readable identity and access. */
+#usersView .bi-table { min-width: 920px; table-layout: fixed; }
+#usersView .bi-table th:nth-child(1) { width: 21%; }
+#usersView .bi-table th:nth-child(2) { width: 10%; }
+#usersView .bi-table th:nth-child(3) { width: 19%; }
+#usersView .bi-table th:nth-child(4) { width: 26%; }
+#usersView .bi-table th:nth-child(5) { width: 8%; }
+#usersView .bi-table th:nth-child(6) { width: 16%; }
+.bi-table th, .bi-table td { padding: 15px 16px; }
+.bi-user-row td { vertical-align: top; }
+.bi-user-identity { display: flex; flex-direction: column; gap: .25rem; min-width: 0; }
+.bi-user-identity strong { color: var(--bi-ink); font-size: .9rem; line-height: 1.3; overflow-wrap: anywhere; }
+.bi-user-identity span { color: var(--bi-muted); font-size: .76rem; overflow-wrap: anywhere; }
+.bi-permissions-list, .bi-units-list { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem; }
+.bi-units-list .bi-badge { margin: 0; }
+.bi-all-units {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: .35rem .7rem;
+  border: 1px solid #a8d89d;
+  border-radius: 999px;
+  background: var(--bi-green-soft);
+  color: #326d29;
+  font-size: .78rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.bi-empty-value { color: var(--bi-muted); font-size: .8rem; }
+.bi-units-details { max-width: 100%; }
+.bi-units-details summary {
+  width: fit-content;
+  padding: .25rem .55rem;
+  border-radius: 999px;
+  background: var(--bi-primary-soft);
+  color: var(--bi-primary-dark);
+  font-size: .75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.bi-units-details[open] { flex-basis: 100%; }
+.bi-units-list-expanded { margin-top: .55rem; }
+.bi-row-actions { display: flex; flex-wrap: wrap; gap: .4rem; }
+.bi-row-actions .btn { white-space: nowrap; padding: .4rem .55rem; font-size: .76rem; }
+#linksTableBody td:first-child > div:first-child { color: var(--bi-ink) !important; overflow-wrap: anywhere; }
+#linksTableBody td:nth-child(3) > span { color: var(--bi-muted) !important; }
+
 /* Dialogs */
 .bi-modal-overlay { background: rgba(15, 23, 42, .5); }
 .bi-modal-content { background: #fff; border-color: var(--bi-line); box-shadow: 0 24px 70px rgba(15, 23, 42, .22); }
@@ -230,12 +277,63 @@ select:focus-visible, textarea:focus-visible {
 .bi-back-btn { background: var(--bi-primary-soft); border-color: #d2d4ec; color: var(--bi-primary-dark); }
 .bi-back-btn:hover { background: #e7e8f5; color: #2a2b52; border-color: #b6b9e0; box-shadow: none; }
 
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
   .auth-brand-side { display: none; }
   .auth-form-side { flex: 1; min-height: 100vh; }
   .bi-navbar { flex-wrap: wrap; gap: .8rem; }
-  .bi-nav-links { order: 3; width: 100%; overflow-x: auto; padding-bottom: .2rem; }
+  .bi-nav-links { order: 3; width: 100%; overflow-x: auto; padding-bottom: .2rem; scrollbar-width: thin; }
   .bi-nav-btn { white-space: nowrap; }
+  #usersView > div:first-child, #linksView > div:first-child { align-items: flex-start !important; }
+
+  .bi-table-card { background: transparent; border: 0; box-shadow: none; overflow: visible; }
+  .bi-table, .bi-table tbody { display: block; min-width: 0 !important; }
+  .bi-table thead { display: none; }
+  .bi-table tbody tr:not(:has(td[colspan])) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .9rem 1.25rem;
+    padding: 1rem 1.25rem;
+    margin-bottom: .9rem;
+    border: 1px solid var(--bi-line);
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: var(--bi-shadow);
+  }
+  .bi-table tbody tr:has(td[colspan]) { display: block; background: #fff; border: 1px solid var(--bi-line); border-radius: 14px; }
+  .bi-table tbody tr:has(td[colspan]) td { display: block; }
+  .bi-table tbody tr:not(:has(td[colspan])) td { display: block; padding: 0; border: 0; min-width: 0; }
+  .bi-table tbody tr:not(:has(td[colspan])) td::before {
+    display: block;
+    margin-bottom: .35rem;
+    color: var(--bi-muted);
+    font-size: .67rem;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+  #usersTableBody td:nth-child(1), #usersTableBody td:nth-child(4), #usersTableBody td:nth-child(6),
+  #linksTableBody td:nth-child(1), #linksTableBody td:nth-child(2), #linksTableBody td:nth-child(5) { grid-column: 1 / -1; }
+  #usersTableBody td:nth-child(1)::before { content: "Usuário"; }
+  #usersTableBody td:nth-child(2)::before { content: "Hierarquia"; }
+  #usersTableBody td:nth-child(3)::before { content: "Permissões"; }
+  #usersTableBody td:nth-child(4)::before { content: "Unidades"; }
+  #usersTableBody td:nth-child(5)::before { content: "Status"; }
+  #usersTableBody td:nth-child(6)::before { content: "Ações"; }
+  #linksTableBody td:nth-child(1)::before { content: "Relatório"; }
+  #linksTableBody td:nth-child(2)::before { content: "Link do Power BI"; }
+  #linksTableBody td:nth-child(3)::before { content: "Descrição"; }
+  #linksTableBody td:nth-child(4)::before { content: "Status"; }
+  #linksTableBody td:nth-child(5)::before { content: "Ações"; }
+}
+@media (max-width: 700px) {
+  #usersView > div:first-child, #linksView > div:first-child { flex-direction: column; }
+  #usersView > div:first-child > div:last-child { flex-wrap: wrap; }
+  .bi-table tbody tr:not(:has(td[colspan])) { grid-template-columns: 1fr; }
+  .bi-table tbody tr:not(:has(td[colspan])) td { grid-column: 1 / -1; }
+  #userForm > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; gap: 0 !important; }
+  .bi-link-selection-actions { flex-wrap: wrap; gap: .5rem; }
+  .bi-viewer-title-group { min-width: 0; flex: 1; }
+  .bi-viewer-title { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 }
 @media (max-width: 600px) {
   .auth-form-side { padding: 1rem; }
@@ -247,15 +345,28 @@ select:focus-visible, textarea:focus-visible {
   .bi-logout-btn { padding: 8px; }
   .bi-logout-btn span { display: none; }
   .bi-main-container { padding: 1.5rem 1rem 3rem; }
+  #usersView > div:first-child > div:last-child,
+  #usersView > div:first-child > div:last-child .btn,
+  #linksView > div:first-child > .btn { width: 100%; }
+  #usersView > div:first-child > div:last-child .btn { justify-content: center; }
   .bi-hero-title { font-size: 1.75rem; gap: .3rem; }
   .bi-controls-bar { padding: .85rem; }
   .bi-search-wrapper { max-width: none; min-width: 100%; }
   .bi-cards-grid { grid-template-columns: 1fr; }
   .bi-modal-overlay { padding: .5rem; }
+  .bi-modal-content { max-height: calc(100dvh - 1rem); }
   .bi-modal-header, .bi-modal-body, .bi-modal-footer { padding-left: 1rem; padding-right: 1rem; }
   .bi-modal-checkbox-grid { grid-template-columns: 1fr; }
+  .bi-import-download-btns > * { width: 100%; justify-content: center; }
+  .bi-modal-footer { flex-wrap: wrap; }
+  .bi-modal-footer .btn { flex: 1 1 120px; }
   .bi-viewer-header { padding: 0 .75rem; }
+  .bi-viewer-title-group img, #biBackToHubBtn span { display: none; }
   .bi-viewer-title { font-size: .95rem; }
+}
+@media (max-width: 360px) {
+  .bi-brand-badge { display: none; }
+  .bi-navbar { gap: .5rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

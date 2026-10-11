@@ -35,32 +35,51 @@ function renderizarTabelaUsuarios(usuarios) {
   }
 
   tbody.innerHTML = "";
-  const currentLogged = API.getUser();
+
+  const activeLinkIds = new Set(allAvailableLinks.filter(link => link.ativo).map(link => String(link.id_link)));
 
   usuarios.forEach(u => {
     const tr = document.createElement("tr");
+    tr.className = "bi-user-row";
 
-    const linksNomes = (u.links_bi || []).map(l => `<span class="bi-badge bi-badge-link">${escaparHTML(l.nome)}</span>`).join(" ");
+    const assignedLinks = u.links_bi || [];
+    const assignedIds = new Set(assignedLinks.map(link => String(link.id_link)));
+    const hasAllUnits = u.hierarquia === "Master" ||
+      (activeLinkIds.size > 0 && [...activeLinkIds].every(id => assignedIds.has(id)));
+    const unitBadge = link => `<span class="bi-badge bi-badge-link">${escaparHTML(link.nome)}</span>`;
+    let unitsMarkup = '<span class="bi-empty-value">Nenhuma unidade atribuída</span>';
+
+    if (hasAllUnits) {
+      unitsMarkup = '<span class="bi-all-units">Acesso a todas as unidades</span>';
+    } else if (assignedLinks.length) {
+      const visibleUnits = assignedLinks.slice(0, 4).map(unitBadge).join("");
+      const remainingUnits = assignedLinks.slice(4);
+      unitsMarkup = `<div class="bi-units-list">${visibleUnits}${remainingUnits.length ? `
+        <details class="bi-units-details">
+          <summary>+${remainingUnits.length} unidades</summary>
+          <div class="bi-units-list bi-units-list-expanded">${remainingUnits.map(unitBadge).join("")}</div>
+        </details>` : ""}</div>`;
+    }
 
     tr.innerHTML = `
       <td>
-        <div style="font-weight: 600; color: #fff;">${escaparHTML(u.nome_completo_usuario)}</div>
-        <div class="text-xs text-muted">${escaparHTML(u.email)}</div>
+        <div class="bi-user-identity">
+          <strong>${escaparHTML(u.nome_completo_usuario || u.email)}</strong>
+          <span>${escaparHTML(u.email)}</span>
+        </div>
       </td>
       <td>
         <span class="bi-badge bi-badge-role">${escaparHTML(u.hierarquia)}</span>
       </td>
       <td>
-        <div style="display: flex; gap: 4px; flex-wrap: wrap;">
-          ${u.pode_criar_usuario ? '<span class="bi-badge bi-badge-success" title="Pode gerenciar usuários">Criar Usuários</span>' : ''}
-          ${u.pode_criar_link ? '<span class="bi-badge bi-badge-link" title="Pode cadastrar links">Criar Links</span>' : ''}
-          ${!u.pode_criar_usuario && !u.pode_criar_link ? '<span class="text-xs text-muted">Acesso Consulta</span>' : ''}
+        <div class="bi-permissions-list">
+          ${u.pode_criar_usuario ? '<span class="bi-badge bi-badge-role" title="Pode gerenciar usuários">Criar usuários</span>' : ''}
+          ${u.pode_criar_link ? '<span class="bi-badge bi-badge-role" title="Pode gerenciar links de Power BI">Gerenciar links</span>' : ''}
+          ${!u.pode_criar_usuario && !u.pode_criar_link ? '<span class="bi-empty-value">Somente consulta</span>' : ''}
         </div>
       </td>
       <td>
-        <div style="max-width: 280px; display: flex; flex-wrap: wrap; gap: 4px;">
-          ${linksNomes || '<span class="text-xs text-muted">Nenhum</span>'}
-        </div>
+        ${unitsMarkup}
       </td>
       <td>
         <span class="bi-badge ${u.ativo ? 'bi-badge-success' : 'bi-badge-danger'}">
@@ -68,7 +87,7 @@ function renderizarTabelaUsuarios(usuarios) {
         </span>
       </td>
       <td>
-        <div style="display: flex; gap: 8px;">
+        <div class="bi-row-actions">
           <button class="btn btn-secondary btn-sm btn-edit-user" data-id="${u.id_usuario}">Editar</button>
           <button class="btn btn-secondary btn-sm btn-reset-pwd" data-id="${u.id_usuario}">Nova Senha</button>
         </div>
